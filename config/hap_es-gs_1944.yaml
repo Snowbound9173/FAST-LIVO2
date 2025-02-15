@@ -2,7 +2,7 @@ common:
   img_topic: "/usb_cam/image_raw"
   lid_topic: "/livox/lidar"
   imu_topic: "/livox/imu"
-  img_en: 1
+  img_en: 1 
   lidar_en: 1
   ros_driver_bug_fix: true    # default = false
 
@@ -13,45 +13,47 @@ extrin_calib:
   Pcl: [-0.0001,0.075,-0.08]
 
 time_offset: 
-  imu_time_offset: 0.00001
-  img_time_offset: -0.06  #    # default = 0.1 | good = -0.06
+  imu_time_offset: 0.01
+  img_time_offset: -0.321  #    # default = 0.1 | good = -0.06
   exposure_time_init: 0.0 # default = 0.0
 
 preprocess:
-  point_filter_num: 1       # default = 1
-  filter_size_surf: 0.00005   # default = 0.1 | good = 0.0005
+  point_filter_num: 4       # default = 1           || set to 1 for final output and be patient
+  filter_size_surf: 0.05   # default = 0.1 | good = 0.0005
   lidar_type: 1 # Livox Avia LiDAR
   scan_line: 6
   blind: 1.2       # default = 0.80
 
 vio:
-  max_iterations: 5    # default = 5
-  outlier_threshold: 64 # 78 100 156 #100 200 500 700 infinite
-  img_point_cov: 100         # default = 100 # no change with 10 ?  
-  patch_size: 0.1     # default = 8 ] good = 0.1
-  patch_pyrimid_level: 16    # default = 4 | good = 4  | still good = 16
-  normal_en: true     # default = true
-  raycast_en: true    # default = false
-  inverse_composition_en: false  #default = false | no idea if this helps or hinders
-  exposure_estimate_en: true # default = true | good = true
-  inv_expo_cov: 1   # default = 0.1
+  # Green Points: Successfully tracked inliers.
+  # Blue Points: Tracked outliers with higher errors.
+  max_iterations: 3    # default = 5            || increase when creating final output
+  outlier_threshold: 16           # 78 100 156 #100 200 500 700 infinite
+  img_point_cov: 100              # default = 100 # no change with 10 ?  
+  patch_size: 0.2                   # default = 8 | good = 0.1
+  patch_pyrimid_level: 6          # default = 4 | good = 4  | still good = 16
+  normal_en: true                 # default = true
+  raycast_en: true                # default = false
+  inverse_composition_en: false   # default = false | no idea if this helps or hinders
+  exposure_estimate_en: false     # default = true | good = false
+  inv_expo_cov: 1                 # default = 0.1
 
 imu:
   imu_en: true #true
   imu_int_frame: 30 #30
-  acc_cov: 0.2 # 0.2      # default = 0.5 good=0.25?
-  gyr_cov: 0.5 # 0.5      # default = 0.3 good=0.01
-  b_acc_cov: 0.0005 #0.0001 # 0.1 good = 0.000001?  
-  b_gyr_cov: 0.0005 #0.0001 # 0.1 good = 0.000001?
+  acc_cov: 0.01 # 0.2      # default = 0.5 good=0.25?
+  gyr_cov: 0.01 # 0.5      # default = 0.3 good=0.01
+  b_acc_cov: 0.1 #0.0001 # 0.1 good = 0.000001?  
+  b_gyr_cov: 0.1 #0.0001 # 0.1 good = 0.000001?
 
 lio:
-  max_iterations: 5    # default = 5
-  dept_err: -0.0      # default = 0.02     | good = 0.002 | better = 0
-  beam_err: -0.0      # default = 0.05     | good = 0.005 | better = 0
-  min_eigen_value: 0.0001 # 0.005     #default = 0.0025 good=0.002
+  max_iterations: 3    # default = 5          || increase when creating final output
+  dept_err: 0.001      # default = 0.02     | good = 0.002 | better = 0
+  beam_err: 0.001      # default = 0.05     | good = 0.005 | better = 0
+  min_eigen_value: 0.005 # 0.005     #default = 0.0025 good=0.002
   voxel_size: 0.25      # default = 0.5   | good = 0.025  ###MOST CRITICAL VALUE IMO###
   max_layer: 2       # deafult = 2    | good = 2
-  max_points_num: 100   # default = 50
+  max_points_num: 25   # default = 50      | good = 25 but maybe only in a small scene
   layer_init_num: [5, 5, 5, 5, 5]
 
 local_map:  
