@@ -20,8 +20,8 @@ time_offset:
   exposure_time_init: 0.00       # default = 0.0
 
 preprocess:
-  point_filter_num: 4       # default = 1           || set to 1 for final output and be patient
-  filter_size_surf: 0.1   # default = 0.1 | good = 0.1
+  point_filter_num: 1       # default = 1           || set to 1 for final output and be patient
+  filter_size_surf: 0.2   # default = 0.1 | good = 0.1
   lidar_type: 1 # Livox Avia LiDAR
   scan_line: 6
   blind: 1.2       # default = 0.80

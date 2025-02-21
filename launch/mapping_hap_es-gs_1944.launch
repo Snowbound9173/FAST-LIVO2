@@ -2,6 +2,7 @@
 <!-- Launch file for Livox AVIA LiDAR -->
 
 	<arg name="rviz" default="true" />
+	
 	<!-- config for Livox HAP LiDAR -->
 	<rosparam command="load" file="src/FAST-LIVO2/config/hap_es-gs_1944.yaml" />
 	<!-- config for Livox 4k b0475 camera -->

@@ -1,7 +1,7 @@
 cam_model: Pinhole
 cam_width: 2592
 cam_height: 1944
-scale: 1
+scale: 0.5
 cam_fx: 1480.084398
 cam_fy: 1483.553313
 cam_cx: 1305.822497
