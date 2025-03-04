@@ -31,15 +31,15 @@ preprocess:
   filter_size_surf: 0.08   # default = 0.1 | good = 0.1
   lidar_type: 1 # Livox Avia LiDAR
   scan_line: 6
-  blind: 1.75       # default = 0.80 | good 1.2m
+  blind: 1.1       # default = 0.80
 
 vio:
   # Green Points: Successfully tracked inliers.
   # Blue Points: Tracked outliers with higher errors.
   max_iterations: 5                   # default = 5            || increase when creating final output
-  outlier_threshold: 60               # 78 100 156 #100 200 500 700 infinite
-  img_point_cov: 60                   # default = 100 # Seems to be a tolerance for blue/green points on image
-  patch_size: 8                      # default = 8 | good = 8 or 16
+  outlier_threshold: 90               # 78 100 156 #100 200 500 700 infinite
+  img_point_cov: 90                   # default = 100 # Seems to be a tolerance for blue/green points on image
+  patch_size: 16                      # default = 8 | good = 8 or 16
   patch_pyrimid_level: 4              # default = 4 | good = 4   or 
   normal_en: true                     # default = true
   raycast_en: true                    # default = false
@@ -50,19 +50,19 @@ vio:
 imu:
   imu_en: true #true
   imu_int_frame: 30 #30
-  acc_cov: 0.2          # default = 0.5 good=0.2
-  gyr_cov: 0.2          # default = 0.3 good=0.2
-  b_acc_cov: 0.001 #0.0001 # 0.1 good = 0.001?  
-  b_gyr_cov: 0.001 #0.0001 # 0.1 good = 0.001?
+  acc_cov: 0.2          # default = 0.5 good=0.25?
+  gyr_cov: 0.2          # default = 0.3 good=0.01
+  b_acc_cov: 0.0001 #0.0001 # 0.1 good = 0.000001?  
+  b_gyr_cov: 0.0001 #0.0001 # 0.1 good = 0.000001?
 
 lio:
   max_iterations: 5           # default = 5          || increase when creating final output
-  dept_err: 0.02               # default = 0.02     | good = 0.002 | better = 0
-  beam_err: 0.03              # default = 0.05     | good = 0.005 | better = 0
-  min_eigen_value: 0.0025      # ****0.005     #default = 0.0025 good=0.002
-  voxel_size: 0.25             # default = 0.5   | good = 0.025  ###MOST CRITICAL VALUE IMO###
+  dept_err: 0.03               # default = 0.02     | good = 0.002 | better = 0
+  beam_err: 0.05              # default = 0.05     | good = 0.005 | better = 0
+  min_eigen_value: 0.01      # ****0.005     #default = 0.0025 good=0.002
+  voxel_size: 0.3             # default = 0.5   | good = 0.025  ###MOST CRITICAL VALUE IMO###
   max_layer: 2                # deafult = 2    | good = 2
-  max_points_num: 100   # default = 50  500     | More is better but much slower.
+  max_points_num: 500   # default = 50  500     | More is better but much slower.
   layer_init_num: [5, 5, 5, 5, 5]         # default = [5, 5, 5, 5, 5]
 
 local_map:  
@@ -79,7 +79,7 @@ publish:
   pub_effect_point_en: true 
   pub_plane_en: true
   pub_scan_num: 1
-  blind_rgb_points: 2       # default = 0.0 # good might need to match the lidar blind or more? 
+  blind_rgb_points: 1       # default = 0.0 # good might need to match the lidar blind or more? 
 
 evo:
   seq_name: "RSS"

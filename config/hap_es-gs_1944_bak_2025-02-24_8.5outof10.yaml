@@ -10,39 +10,35 @@ common:
 extrin_calib:
   extrinsic_T: [ -0.0137, -0.0421, -0.0332 ]  # coordinate system X=-13.7mm, Y=-42.1 Z=-33.2   
   extrinsic_R: [ 1, 0, 0, 0, 1, 0, 0, 0, 1]
-  Rcl: [0.0017453283658983088,-0.9999984769132877,0.0,0.010471768166810553,1.8276701859647138e-05,-0.9999451693655121,0.9999436463623117,0.001745232668436617,0.010471784116245794]
-  Pcl: [0.0,0.075,-0.0075]
-  # Rcl: [0.0017331411066888519,-0.9999923951578041,-0.0034936869439765126,0.01570732831158573,0.0035204840722024362,-0.9998704346210109,0.9998751302333789,0.0016780400637575823,0.015713310355493573]
-  # Pcl: [0.0,0.075,-0.12]
-  # Rcl: [0.0000,-1,0.0004397486592210532,0.014826451087825905,-0.00043066072185354707,-0.9998899893885741,0.9998898962458206,0.0006161524882552965,0.014826184324827294]
-  # Pcl: [0.0,0.075,-0.132]
+  Rcl: [0.0000,-1,0.0004397486592210532,0.014826451087825905,-0.00043066072185354707,-0.9998899893885741,0.9998898962458206,0.0006161524882552965,0.014826184324827294]
+  Pcl: [0.0,0.075,-0.132]
   # Rcl: [0.002181646542918474,-0.9999915278496411,-0.003490651415223732,0.010464144198826505,0.0035132975847163095,-0.9999390773573495,0.9999428694203225,0.002144986951489011,0.010471720318553413]
   # Pcl: [0.0,0.075,-0.127]
   # Rcl: [1.2184647302603444e-05,-0.9999939076577904,-0.0034906301489807763,0.003490630148980776,0.003490651415223732,-0.9999878153526974,0.9999939076577904,0.0,0.0034906514152237317]
   # Pcl: [-0.0001,0.075,-0.08]
 
 time_offset: 
-  imu_time_offset: 0.001          # 0.001 chosen randomly
-  img_time_offset: -0.065         #-0.065 | -0.2        # default = 0.1 | good = -0.16
+  imu_time_offset: 0.001
+  img_time_offset: -0.065         #-0.2        # default = 0.1 | good = -0.16
   exposure_time_init: 0.00       # default = 0.0
 
 preprocess:
   point_filter_num: 1       # default = 1           || set to 1 for final output and be patient
-  filter_size_surf: 0.08   # default = 0.1 | good = 0.1
+  filter_size_surf: 0.1   # default = 0.1 | good = 0.1
   lidar_type: 1 # Livox Avia LiDAR
   scan_line: 6
-  blind: 1.75       # default = 0.80 | good 1.2m
+  blind: 1.2       # default = 0.80
 
 vio:
   # Green Points: Successfully tracked inliers.
   # Blue Points: Tracked outliers with higher errors.
   max_iterations: 5                   # default = 5            || increase when creating final output
-  outlier_threshold: 60               # 78 100 156 #100 200 500 700 infinite
-  img_point_cov: 60                   # default = 100 # Seems to be a tolerance for blue/green points on image
-  patch_size: 8                      # default = 8 | good = 8 or 16
-  patch_pyrimid_level: 4              # default = 4 | good = 4   or 
+  outlier_threshold: 100              # 78 100 156 #100 200 500 700 infinite
+  img_point_cov: 100                   # default = 100 # Seems to be a tolerance for blue/green points on image
+  patch_size: 8                       # default = 8 | good = 8
+  patch_pyrimid_level: 4              # default = 4 | good = 4  
   normal_en: true                     # default = true
-  raycast_en: true                    # default = false
+  raycast_en: false                    # default = false
   inverse_composition_en: false       # default = false | no idea if this helps or hinders
   exposure_estimate_en: true          # default = true | good = false
   inv_expo_cov: 0.01                  # default = 0.1
@@ -50,19 +46,19 @@ vio:
 imu:
   imu_en: true #true
   imu_int_frame: 30 #30
-  acc_cov: 0.2          # default = 0.5 good=0.2
-  gyr_cov: 0.2          # default = 0.3 good=0.2
-  b_acc_cov: 0.001 #0.0001 # 0.1 good = 0.001?  
-  b_gyr_cov: 0.001 #0.0001 # 0.1 good = 0.001?
+  acc_cov: 0.2          # default = 0.5 good=0.25?
+  gyr_cov: 0.2          # default = 0.3 good=0.01
+  b_acc_cov: 0.0001 #0.0001 # 0.1 good = 0.000001?  
+  b_gyr_cov: 0.0001 #0.0001 # 0.1 good = 0.000001?
 
 lio:
   max_iterations: 5           # default = 5          || increase when creating final output
-  dept_err: 0.02               # default = 0.02     | good = 0.002 | better = 0
-  beam_err: 0.03              # default = 0.05     | good = 0.005 | better = 0
-  min_eigen_value: 0.0025      # ****0.005     #default = 0.0025 good=0.002
-  voxel_size: 0.25             # default = 0.5   | good = 0.025  ###MOST CRITICAL VALUE IMO###
+  dept_err: 0.002               # default = 0.02     | good = 0.002 | better = 0
+  beam_err: 0.005               # default = 0.05     | good = 0.005 | better = 0
+  min_eigen_value: 0.0005     # 0.005     #default = 0.0025 good=0.002
+  voxel_size: 0.4             # ***default = 0.5   | good = 0.025  ###MOST CRITICAL VALUE IMO###
   max_layer: 2                # deafult = 2    | good = 2
-  max_points_num: 100   # default = 50  500     | More is better but much slower.
+  max_points_num: 75   # default = 50      | good = 25 but maybe only in a small scene
   layer_init_num: [5, 5, 5, 5, 5]         # default = [5, 5, 5, 5, 5]
 
 local_map:  
@@ -72,14 +68,14 @@ local_map:
 
 uav:
   imu_rate_odom: false
-  gravity_align_en: false
+  gravity_align_en: true
 
 publish:
   dense_map_en: true
   pub_effect_point_en: true 
   pub_plane_en: true
   pub_scan_num: 1
-  blind_rgb_points: 2       # default = 0.0 # good might need to match the lidar blind or more? 
+  blind_rgb_points: 1       # default = 0.0 # good might need to match the lidar blind or more? 
 
 evo:
   seq_name: "RSS"
