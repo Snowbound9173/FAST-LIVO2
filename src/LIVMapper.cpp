@@ -1123,6 +1123,7 @@ void LIVMapper::publish_frame_world(const ros::Publisher &pubLaserCloudFullRes, 
       pub_num = 1;
       size_t size = pcl_wait_pub->points.size();
       laserCloudWorldRGB->reserve(size);
+      // double inv_expo = _state.inv_expo_time;
       cv::Mat img_rgb = vio_manager->img_rgb;
       for (size_t i = 0; i < size; i++)
       {
@@ -1135,20 +1136,20 @@ void LIVMapper::publish_frame_world(const ros::Publisher &pubLaserCloudFullRes, 
         V3D pf(vio_manager->new_frame_->w2f(p_w)); if (pf[2] < 0) continue;
         V2D pc(vio_manager->new_frame_->w2c(p_w));
 
-        if (vio_manager->new_frame_->cam_->isInFrame(pc.cast<int>(), 3)) 
+        if (vio_manager->new_frame_->cam_->isInFrame(pc.cast<int>(), 3)) // 100
         {
           V3F pixel = vio_manager->getInterpolatedPixel(img_rgb, pc);
           pointRGB.r = pixel[2];
           pointRGB.g = pixel[1];
           pointRGB.b = pixel[0];
-          if (pf.norm() > blind_rgb_points) 
-          {
-            // New logic to filter points based on pub_pt_minimum_views
-            if (pcl_wait_pub->points[i].views >= pub_pt_minimum_views) 
-            {
-              laserCloudWorldRGB->push_back(pointRGB);
-            }
-          }
+          // pointRGB.r = pixel[2] * inv_expo; pointRGB.g = pixel[1] * inv_expo; pointRGB.b = pixel[0] * inv_expo;
+          // if (pointRGB.r > 255) pointRGB.r = 255;
+          // else if (pointRGB.r < 0) pointRGB.r = 0;
+          // if (pointRGB.g > 255) pointRGB.g = 255;
+          // else if (pointRGB.g < 0) pointRGB.g = 0;
+          // if (pointRGB.b > 255) pointRGB.b = 255;
+          // else if (pointRGB.b < 0) pointRGB.b = 0;
+          if (pf.norm() > blind_rgb_points) laserCloudWorldRGB->push_back(pointRGB);
         }
       }
     }
