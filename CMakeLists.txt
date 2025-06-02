@@ -85,7 +85,6 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   pcl_ros
   tf
-  livox_ros_driver
   message_generation
   eigen_conversions
   vikit_common
@@ -99,6 +98,8 @@ find_package(PCL REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(Sophus REQUIRED)
 find_package(Boost REQUIRED COMPONENTS thread)
+
+set(Sophus_LIBRARIES libSophus.so)
 
 # Define the catkin package
 catkin_package(
